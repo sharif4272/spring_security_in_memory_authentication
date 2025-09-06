@@ -45,17 +45,20 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")                   // Custom login page
-                        .loginProcessingUrl("/doLogin")        // Form action
+                        .loginPage("/login")              // GET /login → আপনার controller serve করবে login.html
+                        .loginProcessingUrl("/doLogin")   // POST /doLogin → Spring Security authenticate করবে
                         .defaultSuccessUrl("/user/dashboard", true)
-                        .failureUrl("/login?error=true")       // Error handling
+                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout=true")
+                        .logoutSuccessUrl("/login?logout=true") // logout হলে login page
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
+
 
         return http.build();
     }

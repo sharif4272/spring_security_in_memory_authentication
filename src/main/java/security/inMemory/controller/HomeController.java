@@ -25,8 +25,9 @@ public class HomeController {
         if (logout != null) {
             model.addAttribute("successMsg", "✅ You have been logged out successfully.");
         }
-        return "login";
+        return "login"; // login.html
     }
+
 
     @GetMapping("/user/dashboard")
     public String userDashboard() {
